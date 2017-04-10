@@ -41,7 +41,32 @@ def barracks_3
 end
 
 def barracks_4
-	puts "You enter Barracks #4"
+	button = false
+
+	puts """
+You dive as the walls close in behind you, rattling the whole room in the process.
+Dust from the ceiling falls on your head. \"Well, that was probably the most dangerous thing I've done
+in my whole life!\" you think, as you stand up and brush yourself off.
+"""
+
+	puts "You look around."
+	puts "You see multiple bunkbeds with chests in front of them 'This is a barracks', you think to yourself"
+	puts "What kind of trouble have you gotten yourself into?"
+	puts "You don't see anything around, but you could always look, or go back..."
+	puts "1. Look Around"
+	puts "2. Go Back"
+
+	choice = user_input
+	if choice == "1" || choice == "1." || choice.include?("look")
+		puts """
+As you look around the barracks, you actually become really glad you did. There must have been some
+really important soldiers in here, cuz you're able to pick  up some nice litle trinkets, and even a sword!
+"""
+		puts "When you reach the end of your search, you come to marvel at a really big, red button!"
+		puts "There used to be writing on it, but now you can't tell what it says, it's been pressed too many times"
+		puts "What do you do with the button?"
+
+		ch
 
 end
 
@@ -130,9 +155,9 @@ you feel.
 			# barracks_4
 		elsif choice == "2" || choice == "left"
 			barracks_3
-		elsif choice == "3" || choice == "far-right"
+		elsif choice == "3" || choice == "far-right" || choice == "far right"
 			barracks_2
-		elsif choice == "4" || choice == "far-left"
+		elsif choice == "4" || choice == "far-left" || choice == "far left"
 			barracks_1
 		elsif choice == "5" || choice == "forward"
 			antechamber
@@ -158,7 +183,7 @@ def hallway_4
 	puts "Hallway 4"
 end
 
-def hallway_5
+def hallway_5(button = false,back = false)
 	#Leads into barracks_4
 	puts "Hallway 5"
 	puts """
@@ -168,14 +193,25 @@ lighter, so you make sure to light that shit up!
 """
 	puts "It's a long walk down the hallway"
 	sleep(5)
-	puts "While walking, you hear a dull click that resonates throughout your whole body"
-	puts "You shudder in shock as you notice the walls are closing in ahead of you."
-	puts "RUN!!!!"
-	chance = roll_a_die
-	if chance <= 2
-		lose("You couldn't make it. Sorry", &hallway_5)
+	puts "It seems like you've been walking for miles!!!! It wont stop.... Do you want to turn around?"
+	puts "1. Yes"
+	puts "2. No"
+	choice = user_input
+	if choice == "1" || choice == "1." || choice == "yes"
+		hallway_1
+	else
+		puts "While walking, you hear a dull click that resonates throughout your whole body"
+		puts "You shudder in shock as you notice the walls are closing in ahead of you."
+		puts "RUN!!!!"
+		chance = roll_a_die
+		if chance <= 2 && !button
+			lose("You couldn't make it. Sorry")
+		end
+		if back
+			hallway_1
+		else
+			barracks_4
 	end
-	barracks_4
 end
 
 def hallway_6
@@ -210,23 +246,14 @@ def roll_a_die
 	return roll
 end
 
-def lose(lose_text, game_retry = none)
-
+def lose(lose_text)
 	if lose_text == ""
 		puts "You lost, try again..."
 	else
 		puts lose_text
 	end
+	exit(0)
 
-	puts "\nWould you like to try again?"
-	puts "1. Yes"
-	puts "2. No"
-	choice = user_input
-	if choice == "1" || choice == "1." || choice == "yes"
-		game_retry
-	else
-		exit(0)
-	end
 end
 
 def start
