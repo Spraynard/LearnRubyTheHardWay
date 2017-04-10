@@ -3,6 +3,7 @@
 class Typewriter
 
 	@@type_hash = {
+		'very_slow' => 1.0,
 		'slow' => 0.2,
 		'regular' => 0.1,
 		'fast' => 0.08,
@@ -24,7 +25,7 @@ class Typewriter
 
 	def change_speed(speed)
 		if !@@type_hash.key?(speed)
-			print "Wrong key entered. Please only enter 'slow', 'regular', or 'fast'"
+			print "Wrong key entered. Please only enter 'very_slow', 'slow', 'regular', 'fast', or 'very_fast'"
 		else
 			@speed = @@type_hash[speed]
 		end

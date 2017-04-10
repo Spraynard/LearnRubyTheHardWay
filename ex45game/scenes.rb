@@ -68,7 +68,7 @@ class Dream < Scene
 				"For a second there you thought you might have been blind, but the steady flame comforts your mind.\n"\
 				"You reach down to the ground to brace yourself, and as you stand up, you suddenly feel\nthat you were sitting in at least a foot deep of water\n"\
 				"How didn't you notice it before?")
-		@@t.change_speed('slow')
+		@@t.change_speed('very_slow')
 		@@t.type(".\n.\n.\n.")
 		@@t.change_speed('very_fast')
 		@@t.type("'HELLOOOOOOOOOOOOO!!!', you call out to the darkness around you. Nothing stirs past the sound of the wind.\n"\
@@ -87,6 +87,7 @@ class Dream < Scene
 				"Unable to see anything, your heightened sense of awareness alerts you of something right above you\n"\
 				"but you don't care. you resign yourself completely. Absolute pain comes suddenly, and fiercely.")
 		sleep(5)
+		return "inn-bedroom"
 	end
 end
 
