@@ -39,6 +39,11 @@ class Skeleton < Monster
 	end
 end
 
+class Gargoyle < Monster
+	def initialize()
+	end
+end
+
 class Gorgon < MiniBoss
 	def initialize()
 	end

@@ -57,9 +57,6 @@
 # *Engine
 # *Map
 
-class Scene
-	def enter()
-	end
-end
+require "./engine.rb"
+require "./map.rb"
 
-class
