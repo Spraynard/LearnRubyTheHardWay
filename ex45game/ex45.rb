@@ -57,6 +57,13 @@
 # *Engine
 # *Map
 
+require "./scenes.rb"
+require "./monsters.rb"
+require "./characters.rb"
 require "./engine.rb"
 require "./map.rb"
 
+map = Map.new('dream')
+#I wanna start this game at the dream scene! Unless i'm in tester mode....
+engine = Engine.new(map, true)
+engine.play()
