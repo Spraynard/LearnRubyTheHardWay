@@ -5,6 +5,7 @@ require "./typewriter.rb"
 class Scene
 	#I want to set a new typewriter instance for each scene
 	@@t = Typewriter.new('very_fast')
+	@@knife = false
 
 	def enter()
 		puts "This is the base scene class. This should not be showing up at all, so make sure\n"\
@@ -76,9 +77,9 @@ class Dream < Scene
 
 	def enter()
 		if @return_to_sleep
+			#Player returns to a dream if they go back to sleep
 			@@t.type("You return to the black room you were in before in the same situation that you left it. The only difference is that you get to feel\n"\
 				"all the pain, in great detail, that you only quickly felt before as an unknown... monster (?) eats you limb by limb.")
-			#agh, I don't know how I'm going to get these deaths to workkkk!!!!
 			return "death(dream_return)"
 		else
 			@@t.type("\tYour eyes open, but you can't see anything; nothing but pitch blackness surrounds you wherever you look.\n"\
@@ -115,11 +116,14 @@ end
 
 class Inn < Scene
 	def initialize(kicked_out = false, returned = false)
+		# => `@kicked_out`: player was kicked out of the bar and then returns from outside
+		# => `@returned`: player returns from outside, nothing else
 		@kicked_out = kicked_out
 		@returned = returned
 	end
 
 	def enter()
+		#Player can either 
 		if @kicked_out
 			return "death(inn)"
 		elsif @returned && !@kicked_out
@@ -228,15 +232,13 @@ class OutsideInn < Scene
 		end
 		puts "\n"
 		@@t.type("What do you do?")
-		choices = ["Go back inside the inn. You're scared.", "Explore", "Search for directions to Harrow's Cave"]
+		choices = ["Go back inside the inn. You're scared.", "Search for directions to Harrow's Cave"]
 		choice = list_choices(choices)
 		if choice == 1 and !@kicked_out
 			return "inn(returned)"
 		elsif choice == 1 and @kicked_out
 			return "inn(kicked-out)"
-		elsif choice == 2
-			@@t.type("You are now exploring the oustide of the little town that you happen to be in")
-		else 
+		else
 			@@t.type("You evntually meet a person who gives you directions to the cave! Yay!!!")
 		end
 	end
@@ -261,9 +263,9 @@ class Whorehouse < Scene
 				"\tcellphone reception... Yeah.....")
 			return "outside(whorehouse)"
 		elsif @after_sex_enter
-			@@t.type("You get down to the lobby, breathe heavily as you reach the last step, and look to see a very attractive older lady\n"\
-				"\tworking on paperwork on a very ornate wooden desk\n"\
-				"She looks up to you as you pass, and nods her head as you head outside")
+			@@t.type("You get down to the lobby, breathe heavily as you reach the last step, and look to see a very attractive\n"\
+				"\t, lithely shaped older man working on paperwork. The pen he was writing with was almost as ornate as the desk;\n"\
+				"Feathers accenting both pieces. He looks up to you as you pass, and nods his head as you head outside")
 			return "outside(whorehouse)"
 		else
 			@@t.type("this is if the player goes to the whorehouse of their own will!")
@@ -357,6 +359,43 @@ class Outside < Scene
 		
 		return "road-to-cave(basic)"
 
+	end
+end
+
+#--------------------------------Road to Cave---------------------------------------#
+class Road < Scene
+
+	def enter()
+		@@t.type("As you head out on to the road, you feel assured that everything will be alright.\n"\
+			"\"Your boss is a cool guy!\", you think to yourself.\n"\
+			"\"We did hit some pretty gnarly waves that time... Wow, that must have been six or seven years ago! \n"\
+			"Haha, he'll like if I invited him to do that again.\"\n"\
+			"You ponder over the possibilities of what those future plans with your boss will be like for many hours.\n"
+			"So much so, that when your feet strike rough unkempt grass, you realize that you had walked\n"\
+			"completely off of the main trail for a couple of minutes.\""
+			"Though, your surprise wanes as you look down and see a glittering object in the forest sun.")
+		choices = ["Go up to the sparkle and see what all that glittering is all about!",
+					"Stay away from the sparkling object, such things do not even interest you"]
+		choice = list_choices(choice)
+		if choice == 1
+			@@t.type("You go up to the glimmering object in utter curiosity!\n"\
+				"\"What could this mysterious object be?\", you tell yourself."
+				"You walk up to the object, get it at your feet, bend down, and see that you can make\n"
+				"out the tip of a knife! A pretty big one at that! The handle looks pretty old and worn\n"
+				"but you know that this is a well made blade. Made for warfare.\n"
+				"The wind picks up as you turn towards where you came. A storm could be afoot, either that or\n"
+				"an ominous symbol. You think it's the former, though.")
+			@@knife = true
+		else
+			@@t.type("You turn around and go back to the main road. Nothing can stop you from getting to that cave,\n"\
+				"not even something that's shiny and glittering. You don't really know what made you make that decision.\n"\
+				"Was it pride? Was it fear? It deosn't matter anymore anyway.")
+		end
+		@@t.type("Minutes go into hours as you walk towards the cave. Every minute or so you look at your phone to first check\n"\
+			"on your cellular service, and then the current time. Neither are favorable, but, if it's the only way that you're\n"\
+			"going to be able to get cellphone service, then you gotta do it.\n\n"\
+			"A sign comes up out of the distance saying \"Harrow's Cave | Only 20 minutes away\""\
+			"\"By Car?!\", you think to yourself. You have at least another couple hours on the road, you think")
 	end
 end
 
